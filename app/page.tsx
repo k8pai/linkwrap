@@ -45,13 +45,6 @@ export default function Home() {
 							<BsBookmark />
 						</button>
 					</div>
-					{/* <button
-						type="button"
-						className="mx-2 p-3 transition duration-150 rounded-md "
-						onClick={() => setState('')}
-					>
-						<MdOutlineClear />
-					</button> */}
 				</div>
 				<div className="mt-6 p-2">
 					<h1 className="font-semibold capitalize trakcing-wider">
