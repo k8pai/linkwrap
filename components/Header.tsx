@@ -1,19 +1,13 @@
-'use client';
-
 import Link from 'next/link';
 import React from 'react';
 import { SiGithub } from 'react-icons/si';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
+import { SignIn } from './actions';
+import UserDropdown from './UserDropdown';
 
-const Header = () => {
-	const { data, status } = useSession();
-
-	if (!data) {
-		console.log('not logged in!');
-	} else {
-		console.log('logged in as ...', data.user?.email);
-	}
+const Header = async () => {
+	const session = await getServerSession(authOptions);
 
 	return (
 		<header className="p-8">
@@ -23,29 +17,31 @@ const Header = () => {
 						LinkWrap
 					</Link>
 				</div>
-				<div className="flex flex-row space-x-6">
-					<Link href="/" className="text-black">
+				<div className="flex flex-row items-center space-x-4">
+					{/* <Link
+						href="/"
+						className={`relative z-10 flex items-center p-2 text-sm transition duration-200 text-gray-600 border border-transparent rounded-md dark:focus:ring-opacity-40 focus:outline-none`}
+					>
 						Home
 					</Link>
-					<Link href="/history" className="text-black">
+					<Link
+						href="/history"
+						className={`relative z-10 flex items-center p-2 text-sm transition duration-200 text-gray-600 border border-transparent rounded-md dark:focus:ring-opacity-40 focus:outline-none`}
+					>
 						History
+					</Link> */}
+					<Link
+						href="https://github.com/k8pai/linkwrap"
+						className={`relative z-10 flex items-center p-2 text-sm transition duration-200 text-gray-600 hover:text-gray-800 border border-transparent rounded-md dark:focus:ring-opacity-40 focus:outline-none`}
+						target="_blank"
+					>
+						<SiGithub className={`w-5 h-5`} />
 					</Link>
 					<div>
-						<Link
-							href="https://github.com/k8pai/linkwrap"
-							className="text-black"
-							target="_blank"
-						>
-							<SiGithub className={`w-6 h-6`} />
-						</Link>
-					</div>
-					<div>
-						{data?.user?.email ? (
-							<button onClick={() => signOut()}>Sign Out</button>
+						{session?.user?.email ? (
+							<UserDropdown user={session?.user} />
 						) : (
-							<button onClick={() => signIn('google')}>
-								Sign In
-							</button>
+							<SignIn />
 						)}
 					</div>
 				</div>
