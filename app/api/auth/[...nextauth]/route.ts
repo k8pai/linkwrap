@@ -1,8 +1,11 @@
-import prisma from '@/prisma';
+// import prisma from '@/prisma';
 import nextAuth from 'next-auth';
 import type { NextAuthOptions } from 'next-auth';
-import { PrismaAdapter } from '@auth/prisma-adapter';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import GoogleProvider from 'next-auth/providers/google';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
 	adapter: PrismaAdapter(prisma),
@@ -17,4 +20,4 @@ export const authOptions: NextAuthOptions = {
 
 const handler = nextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export default handler;

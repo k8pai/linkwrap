@@ -2,8 +2,9 @@ import prisma from '@/prisma';
 import { Links } from '@prisma/client';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { options } from '@/app/actions';
 
-export const setLinks = async (data: Links) => {
+export const setLinks = async (data: options) => {
 	try {
 		const response = await prisma.links.create({ data });
 		return { data: response };

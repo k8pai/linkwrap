@@ -3,7 +3,13 @@
 import { revalidatePath } from 'next/cache';
 import { getLinks, setLinks } from '@/lib/links';
 
-export const AddLinks = async (options) => {
+export type options = {
+	link: string;
+	email: string;
+	created_at: Date;
+};
+
+export const AddLinks = async (options: options) => {
 	await setLinks(options);
 	revalidatePath('/');
 };
