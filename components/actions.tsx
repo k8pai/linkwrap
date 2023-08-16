@@ -10,11 +10,11 @@ import { TiTick } from 'react-icons/ti';
 export const SignIn = () => {
 	return (
 		<button
-			className="relative z-10 flex items-center space-x-2 p-2 text-sm text-gray-600 border border-zinc-800/30 rounded-md dark:focus:ring-opacity-40 focus:outline-none"
+			className="relative z-10 flex items-center p-2 text-sm text-gray-600 border border-zinc-800/30 rounded-md dark:focus:ring-opacity-40 focus:outline-none"
 			onClick={() => signIn('google')}
 		>
-			<span>Sign In With</span>
-			<FcGoogle className={`h-5 w-5`} />
+			<span className="hidden sm:block">Sign In With</span>
+			<FcGoogle className={`h-5 w-5 sm:ml-3`} />
 		</button>
 	);
 };

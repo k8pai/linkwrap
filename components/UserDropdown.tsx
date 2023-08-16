@@ -60,7 +60,7 @@ const UserDropdown = ({ user }: props) => {
 						<hr className="border-gray-200" />
 
 						<Link
-							href="/history"
+							href="/saved"
 							onClick={toggleMenu}
 							className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100 "
 						>

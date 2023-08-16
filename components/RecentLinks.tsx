@@ -1,17 +1,21 @@
-import React from 'react';
-import { getLinks } from '@/lib/links';
-import { AnimationButton } from './actions';
+'use client';
+
+import { fetchLocalLinks } from '@/lib/locallinks';
+import React, { useEffect, useState } from 'react';
+import { BiRefresh } from 'react-icons/bi';
+import useSWR from 'swr';
 import LinkComponent from './LinkComponent';
 
-const RecentLinks = async () => {
+const RecentLinks = () => {
 	// const { links, isError, isLoading } = useLinks();
+	const { data, error, isLoading, mutate } = useSWR<string[], Error>(
+		'/locallinks',
+		fetchLocalLinks,
+	);
 
 	// console.log('links => ', links);
 	// console.log('isError => ', isError);
 	// console.log('isLoading => ', isLoading);
-
-	const { data: links, error: isError, loginError } = await getLinks();
-	if (isError) throw new Error(`${isError}`);
 
 	// if (links) {
 	// 	console.log('data got from lib/getLinks function => ', links);
@@ -27,9 +31,17 @@ const RecentLinks = async () => {
 				<h1 className="font-semibold capitalize trakcing-wider">
 					recent links
 				</h1>
-				<AnimationButton />
+				<BiRefresh />
 			</div>
-			<div className="mt-4">
+			<div className="mt-4 max-w-fit w-full">
+				{data ? (
+					data?.map((el, _) => <LinkComponent key={_} link={el} />)
+				) : isLoading ? (
+					<span>Loading...</span>
+				) : (
+					<span>No recent links</span>
+				)}
+				{/* <LocalLinks /> */}
 				{/* {isError && (
 					<div className="group w-fit flex items-center space-x-2 font-mono text-sm mt-2 hover:text-cyan-600">
 						<span>Failed to fetch</span>
@@ -40,12 +52,12 @@ const RecentLinks = async () => {
 						<span>fetching saved links...</span>
 					</div>
 				)} */}
-				{links &&
+				{/* {links &&
 					links
 						.slice(0, 5)
 						.map(({ id, email, link, created_at }, _) => (
 							<LinkComponent key={id} link={link} />
-						))}
+						))} */}
 			</div>
 		</div>
 	);

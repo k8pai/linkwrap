@@ -10,7 +10,7 @@ const Header = async () => {
 	const session = await getServerSession(authOptions);
 
 	return (
-		<header className="p-8">
+		<header className="p-4 md:p-8">
 			<nav className="flex justify-between items-center">
 				<div>
 					<Link href="/" className="text-black font-semibold text-xl">

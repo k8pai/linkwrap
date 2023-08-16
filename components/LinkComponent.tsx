@@ -25,14 +25,13 @@ const LinkComponent = ({ link }: { link: string }) => {
 	};
 
 	return (
-		<div className="group w-fit font-mono text-sm mt-2 hover:text-cyan-600">
-			<button
-				onClick={() => copyToClipboard()}
-				className=" flex items-center space-x-2"
-			>
-				<span className="cursor-pointer">{link}</span>
+		<div className="group w-fit max-w-full lg:max-w-2xl flex items-center space-x-2 transition-all py-2 px-3 border rounded-md shadow-md hover:shadow-lg font-mono text-sm mt-2">
+			<span className="cursor-pointer whitespace-nowrap overflow-hidden px-1">
+				{link}
+			</span>
+			<button onClick={() => copyToClipboard()} className={``}>
 				<FiCopy
-					className={`transition duration-150 opacity-0 group-hover:opacity-100`}
+					className={'w-4 h-4 inset-0 opacity-50 hover:opacity-100'}
 				/>
 			</button>
 			<Notifier notification={notification} />

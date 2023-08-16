@@ -8,8 +8,8 @@ const QRcode = () => {
 	const { state } = useFormContext();
 	return (
 		<div>
-			<h1 className="font-semibold text-lg capitalize tracking-wider p-2 mb-4">
-				Scan Your QR Code
+			<h1 className="font-semibold text-lg text-center capitalize tracking-wider p-2 mb-4">
+				QR Code
 			</h1>
 			<div className="flex justify-center items-center w-48 h-48">
 				{state ? (

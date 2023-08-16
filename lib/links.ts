@@ -18,7 +18,7 @@ export const getLinks = async () => {
 		const session = await getServerSession(authOptions);
 
 		if (!session?.user?.email) {
-			return { loginError: 'not logged in' };
+			return { loginError: 'Login to see Recent links.' };
 		}
 		const { email } = session.user;
 
