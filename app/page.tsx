@@ -10,8 +10,8 @@ export default async function Home() {
 	if (!session) console.log('not logged in from user...');
 
 	return (
-		<div className="flex-1 flex flex-col items-center lg:flex-row justify-evenly lg:items-start p-10 h-full w-full">
-			<div>
+		<div className="flex-1 flex flex-col items-center lg:flex-row justify-evenly lg:items-start p-3 md:p-10 h-full w-full">
+			<div className="max-w-full lg:max-w-3xl w-full">
 				<Form email={session?.user?.email!} />
 				<RecentLinks />
 			</div>
