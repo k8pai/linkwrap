@@ -1,7 +1,8 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { getLinks, setLinks } from '@/lib/links';
+import { deleteLink, getLinks, setLinks } from '@/lib/links';
+import { Links } from '@prisma/client';
 
 export type options = {
 	link: string;
@@ -22,4 +23,8 @@ export const GetLinks = async () => {
 export const refreshLinks = async () => {
 	await getLinks();
 	revalidatePath('/');
+};
+
+export const DeleteLink = async (_id: string) => {
+	await deleteLink(_id);
 };

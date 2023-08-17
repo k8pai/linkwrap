@@ -28,3 +28,12 @@ export const getLinks = async () => {
 		return { error };
 	}
 };
+
+export const deleteLink = async (_id: string) => {
+	try {
+		const data = await prisma.links.delete({ where: { id: _id } });
+		return { data };
+	} catch (error) {
+		return { error };
+	}
+};

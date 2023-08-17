@@ -31,6 +31,7 @@ const Form = ({ email }: { email: string }) => {
 				: [link as string],
 		});
 
+		setState('');
 		if (!email) {
 			return;
 		}
@@ -41,7 +42,6 @@ const Form = ({ email }: { email: string }) => {
 			created_at: new Date(),
 		};
 		AddLinks(options);
-		setState('');
 	};
 	return (
 		<div className="flex w-full justify-center lg:justify-start items-center">
