@@ -1,5 +1,3 @@
-export const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
 export const deleteLinkAPI = (id: string) =>
 	fetch('/api/saved', {
 		method: 'DELETE',
