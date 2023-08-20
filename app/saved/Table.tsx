@@ -5,11 +5,11 @@ import { timestampToTime } from '@/lib/helpers';
 import { Links } from '@prisma/client';
 import React, { useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
-import { MdDelete, MdKeyboardArrowUp } from 'react-icons/md';
+import { MdDelete, MdKeyboardArrowUp, MdShare } from 'react-icons/md';
 import { DeleteLink } from '../actions';
 import useSWR from 'swr';
-import { deleteLink } from '@/lib/links';
-import { deleteLinkAPI, fetchLink, getLinkAPI } from '@/lib/swr';
+import { fetchLink } from '@/lib/swr';
+import Options from './Options';
 
 const Table = ({ email }: { email: string }) => {
 	const [notification, setNotification] = useState<boolean>(false);
@@ -19,15 +19,10 @@ const Table = ({ email }: { email: string }) => {
 		mutate,
 	} = useSWR<Links[], Error>('/savedLinks', fetchLink);
 
-	console.log('saved => ', saved);
 	const deleteSavedList = async (id: string) => {
-		//delete link from database where id = ${id}
 		console.log('deleting list with id => ', id);
 		await DeleteLink(id);
 		mutate();
-		// await mutate(DeleteLink(id), {
-		// 	optimisticData: [...saved?.filter((el) => el.id !== id)!],
-		// });
 	};
 
 	const sortLinks = () => {
@@ -50,9 +45,20 @@ const Table = ({ email }: { email: string }) => {
 			}, 1000);
 		}
 	};
+
+	const handleShareClick = (item: string) => {
+		// const encodedItem = encodeURIComponent(item);
+
+		const additionalText = '*Hey, check out this awesome link!*';
+		const whatsappMessage = `${additionalText} \n\n${item}`;
+		const whatsappLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+			whatsappMessage,
+		)}`;
+		window.location.href = whatsappLink;
+	};
 	return (
 		<div>
-			<div className="overflow-x-auto max-w-full w-full shadow-md sm:rounded-md">
+			<div className="max-w-full w-full shadow-md sm:rounded-md">
 				<table className="w-full text-sm text-left text-zinc-500 shadow-md">
 					<thead className="text-xs text-zinc-700 uppercase">
 						<tr>
@@ -73,12 +79,15 @@ const Table = ({ email }: { email: string }) => {
 							<th scope="col" className="px-6 py-3">
 								<span className="sr-only">Edit</span>
 							</th>
+							<th scope="col" className="px-6 py-3">
+								<span className="sr-only">Edit</span>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{saved &&
 							saved?.map(({ link, created_at, id }, _) => (
-								<tr key={id} className="bg-emerald-50 border-b">
+								<tr key={id} className="border-b">
 									<th
 										scope="row"
 										className="px-6 py-4 font-medium text-zinc-700 whitespace-nowrap"
@@ -106,6 +115,17 @@ const Table = ({ email }: { email: string }) => {
 											className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
 										>
 											<MdDelete />
+										</button>
+									</td>
+									<td className="px-6 py-4 text-right">
+										<button
+											type="button"
+											onClick={() =>
+												handleShareClick(link)
+											}
+											className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+										>
+											<MdShare />
 										</button>
 									</td>
 								</tr>
