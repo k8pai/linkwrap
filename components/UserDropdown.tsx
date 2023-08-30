@@ -68,11 +68,11 @@ const UserDropdown = ({ user }: props) => {
 						</Link>
 
 						<Link
-							href="#"
+							href="/extention"
 							onClick={toggleMenu}
 							className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100 "
 						>
-							Keyboard shortcuts
+							Manage Extention
 						</Link>
 
 						<hr className="border-gray-200" />

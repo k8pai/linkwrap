@@ -11,3 +11,4 @@ export const getLinkAPI = (email: string) =>
 	}).then((res) => res.json());
 
 export const fetchLink = () => fetch('/api/saved').then((res) => res.json());
+export const fetchExt = () => fetch('/api/extention').then((res) => res.json());
