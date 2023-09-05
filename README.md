@@ -4,7 +4,11 @@ Welcome to LinkWrap, a web application that helps you save links, generate QR co
 
 ## Live Link
 
-Check out the live version of the project: [LinkWrap](https://linkwrap.vercel.app)
+Check out the live version of the project: [LinkWrap](https://linkwrap.k8pai.dev)
+
+## Chrome Extention
+
+Linkwrap offers a Chrome extension for effortless link-saving directly from Chrome or Brave tabs. With just one click, users can simplify the process of saving links. For more details and to access the GitHub repository, please visit: [GitHub Repo - Linkwrap](https://github.com/k8pai/pinit).
 
 ## About the Project
 
@@ -30,10 +34,10 @@ Each user has their dedicated section where they can view and manage the links t
 
 We're continuously working on improving LinkWrap and adding new features to enhance its functionality. Keep an eye out for exciting updates, including:
 
--   Enhanced link categorization
--   Customizable QR code designs
--   Browser extensions for quicker link saving
--   Dark mode
+-   Enhanced link categorization ⚒️
+-   Customizable QR code designs ✅
+-   Browser extensions for quicker link saving ✅
+-   Dark mode ⚒️
 
 ## Contributions
 
