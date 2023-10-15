@@ -8,6 +8,20 @@ import { timestampToTime } from '@/lib/helpers';
 import Table from './Table';
 import { Links } from '@prisma/client';
 import useSWR from 'swr';
+import NextTable from './NextTable';
+import { fetchLink } from '@/lib/swr';
+
+export const fetchLinks = async (
+	email: string | null | undefined,
+): Promise<Links[]> => {
+	const res = await fetch(`${process.env.NEXTAUTH_URL}/api/saved`, {
+		method: 'POST',
+		body: JSON.stringify({ email }),
+	});
+	const response = await res.json();
+
+	return response;
+};
 
 const page = async () => {
 	const session = await getServerSession(authOptions);
@@ -17,6 +31,7 @@ const page = async () => {
 	}
 
 	// const { data: saved, error, loginError } = await getLinks();
+	const links = await fetchLinks(session?.user?.email);
 
 	return (
 		<div className="flex-1 flex flex-col lg:flex-row lg:justify-evenly p-10 h-full w-full">
@@ -25,7 +40,8 @@ const page = async () => {
 					All saved links
 				</h1>
 
-				<Table email={session?.user?.email!} />
+				{/* <Table email={session?.user?.email!} /> */}
+				<NextTable links={links} />
 
 				{/* <div className="max-w-full w-fit flex flex-col px-4 mt-2">
 					{saved &&
