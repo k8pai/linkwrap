@@ -1,8 +1,9 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { deleteLink, getLinks, setLinks } from '@/lib/links';
 import { Links } from '@prisma/client';
+import prisma from '@/prisma';
 
 export type options = {
 	link: string;
@@ -26,5 +27,8 @@ export const refreshLinks = async () => {
 };
 
 export const DeleteLink = async (_id: string) => {
-	await deleteLink(_id);
+	const deletedItem: Links = await prisma.links.delete({
+		where: { id: _id },
+	});
+	revalidateTag('saved');
 };
