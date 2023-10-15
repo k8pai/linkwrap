@@ -14,3 +14,13 @@ export const timestampToTime = (timestamp: Date): string => {
 	let result = `${day}, ${time.toUpperCase()}`;
 	return result;
 };
+
+import { format } from 'date-fns';
+
+export const getTimeHelper = (timestamp: Date): string => {
+	let datestamp = new Date(timestamp);
+
+	let date = format(datestamp, 'dd LLL');
+	let time = format(datestamp, 'hh:mm aaa');
+	return `${date}, ${time.toUpperCase()}`;
+};
