@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { Links } from '@prisma/client';
 import NextTable from './NextTable';
 
-export const fetchLinks = async (
+const fetchLinks = async (
 	email: string | null | undefined,
 ): Promise<Links[]> => {
 	const res = await fetch(`${process.env.NEXTAUTH_URL}/api/saved`, {

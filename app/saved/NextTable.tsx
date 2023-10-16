@@ -41,7 +41,7 @@ const columns: { key: keyof Links | 'actions'; label: string }[] = [
 
 export default function NextTable({ links }: { links: Links[] }) {
 	const [notification, setNotification] = useState<boolean>(false);
-	const [filterValue, setFilterValue] = useState('');
+	const [filterValue, setFilterValue] = useState<string>('');
 	const [page, setPage] = useState(1);
 	const rowsPerPage = 10;
 
@@ -86,7 +86,7 @@ export default function NextTable({ links }: { links: Links[] }) {
 		}
 	};
 
-	const onSearchChange = useCallback((value) => {
+	const onSearchChange = useCallback((value: string) => {
 		if (value) {
 			setFilterValue(value);
 			setPage(1);
@@ -100,7 +100,7 @@ export default function NextTable({ links }: { links: Links[] }) {
 		setPage(1);
 	}, []);
 
-	const renderCell = useCallback((user: Links, columnKey: string) => {
+	const renderCell = useCallback((user: Links, columnKey: any) => {
 		const cellValue = user[columnKey as keyof Links];
 		switch (columnKey) {
 			case 'link':
@@ -168,8 +168,6 @@ export default function NextTable({ links }: { links: Links[] }) {
 						</Dropdown>
 					</div>
 				);
-			default:
-				return cellValue;
 		}
 	}, []);
 
