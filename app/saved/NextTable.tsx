@@ -24,6 +24,8 @@ import { MdDelete } from 'react-icons/md';
 import { getTimeHelper } from '@/lib/helpers';
 import { DeleteLink } from '../actions';
 import { SiWhatsapp } from 'react-icons/si';
+import { HiOutlineExternalLink } from 'react-icons/hi';
+import Link from 'next/link';
 
 const columns: { key: keyof Links | 'actions'; label: string }[] = [
 	{
@@ -124,10 +126,29 @@ export default function NextTable({
 			case 'link':
 				return (
 					<div className="flex flex-col">
-						<p className="text-bold text-sm">
-							{cellValue as string}
+						<p className="text-bold text-small capitalize">
+							{user.title as string}
 						</p>
+						<div className="flex items-start space-x-2">
+							<p className="text-bold text-tiny capitalize text-default-500">
+								{cellValue as string}
+							</p>
+							<Link
+								href={cellValue as string}
+								target="_blank"
+								className="text-bold text-tiny capitalize text-default-500 w-fit p-1 pt-px transition-all hover:text-blue-600"
+							>
+								<HiOutlineExternalLink
+									className={`h-3 w-3 opacity-75`}
+								/>
+							</Link>
+						</div>
 					</div>
+					// <div className="flex flex-col">
+					// 	<p className="text-bold text-sm">
+					// 		{cellValue as string}
+					// 	</p>
+					// </div>
 				);
 			case 'created_at':
 				return (

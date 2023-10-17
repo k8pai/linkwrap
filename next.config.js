@@ -4,7 +4,16 @@ const nextConfig = {
 		serverActions: true,
 	},
 	images: {
-		domains: ['lh3.googleusercontent.com'],
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: '**.example.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'lh3.googleusercontent.com',
+			},
+		],
 	},
 };
 
