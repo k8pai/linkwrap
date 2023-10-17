@@ -1,19 +1,10 @@
 import React from 'react';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../api/auth/[...nextauth]/route';
-import { redirect } from 'next/navigation';
 import NextTable from './NextTable';
 import { getLinks } from '@/lib/links';
 
 export const dynamic = 'force-dynamic';
 
 const page = async () => {
-	// const session = await getServerSession(authOptions);
-
-	// if (!session) {
-	// 	redirect('/');
-	// }
-
 	const { data: links, error, loginError: fallback } = await getLinks();
 
 	return (

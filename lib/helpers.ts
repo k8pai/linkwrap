@@ -15,6 +15,7 @@ export const timestampToTime = (timestamp: Date): string => {
 	return result;
 };
 
+import { Links } from '@prisma/client';
 import { format } from 'date-fns';
 
 export const getTimeHelper = (timestamp: Date): string => {
@@ -23,4 +24,17 @@ export const getTimeHelper = (timestamp: Date): string => {
 	let date = format(datestamp, 'dd LLL');
 	let time = format(datestamp, 'hh:mm aaa');
 	return `${date}, ${time.toUpperCase()}`;
+};
+
+export const fetchLinks = async (
+	email: string | null | undefined,
+): Promise<Links[]> => {
+	const res = await fetch(`/api/saved`, {
+		method: 'POST',
+		body: JSON.stringify({ email }),
+		next: { revalidate: 1, tags: ['saved'] },
+	});
+	const response = await res.json();
+
+	return response;
 };
