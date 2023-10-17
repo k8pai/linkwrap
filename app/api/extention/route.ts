@@ -28,12 +28,18 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-	// console.log('doing something inside post request...');
+	console.log('doing something inside post request...');
 	try {
-		const { email, link } = await request.json();
+		const { email, link, title, icon } = await request.json();
 
 		// const session = await getServerSession(authOptions);
-		// console.log('session => ', session);
+		console.log(
+			'request.json() from extention/route.ts => ',
+			email,
+			icon,
+			link,
+			title,
+		);
 		// if (!session?.user?.email) {
 		// 	return NextResponse.json({ loginError: 'not logged in' });
 		// }
@@ -42,6 +48,8 @@ export async function POST(request: Request) {
 		const data = {
 			email,
 			link,
+			icon,
+			title,
 			created_at: new Date(),
 		};
 
