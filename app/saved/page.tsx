@@ -2,32 +2,19 @@ import React from 'react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
-import { Links } from '@prisma/client';
 import NextTable from './NextTable';
-
-const fetchLinks = async (
-	email: string | null | undefined,
-): Promise<Links[]> => {
-	const res = await fetch(`${process.env.NEXTAUTH_URL}/api/saved`, {
-		method: 'POST',
-		body: JSON.stringify({ email }),
-		next: { revalidate: 1, tags: ['saved'] },
-	});
-	const response = await res.json();
-
-	return response;
-};
+import { getLinks } from '@/lib/links';
 
 export const dynamic = 'force-dynamic';
 
 const page = async () => {
-	const session = await getServerSession(authOptions);
+	// const session = await getServerSession(authOptions);
 
-	if (!session) {
-		redirect('/');
-	}
+	// if (!session) {
+	// 	redirect('/');
+	// }
 
-	const links = await fetchLinks(session?.user?.email);
+	const { data: links, error, loginError: fallback } = await getLinks();
 
 	return (
 		<div className="flex-1 flex flex-col lg:flex-row lg:justify-evenly p-10 h-full w-full">
@@ -36,7 +23,10 @@ const page = async () => {
 					All saved links
 				</h1>
 
-				<NextTable links={links} />
+				<NextTable
+					links={links || []}
+					fallback={!links && fallback ? fallback : 'No Saved links'}
+				/>
 			</div>
 		</div>
 	);
