@@ -23,6 +23,7 @@ import { SlOptionsVertical } from 'react-icons/sl';
 import { MdDelete } from 'react-icons/md';
 import { getTimeHelper } from '@/lib/helpers';
 import { DeleteLink } from '../actions';
+import { SiWhatsapp } from 'react-icons/si';
 
 const columns: { key: keyof Links | 'actions'; label: string }[] = [
 	{
@@ -39,7 +40,13 @@ const columns: { key: keyof Links | 'actions'; label: string }[] = [
 	},
 ];
 
-export default function NextTable({ links }: { links: Links[] }) {
+export default function NextTable({
+	links,
+	fallback,
+}: {
+	links: Links[];
+	fallback: string;
+}) {
 	const [notification, setNotification] = useState<boolean>(false);
 	const [filterValue, setFilterValue] = useState<string>('');
 	const [page, setPage] = useState(1);
@@ -100,6 +107,17 @@ export default function NextTable({ links }: { links: Links[] }) {
 		setPage(1);
 	}, []);
 
+	const handleShareClick = (item: string) => {
+		// const encodedItem = encodeURIComponent(item);
+
+		const additionalText = '*Hey, check out this awesome link!*';
+		const whatsappMessage = `${additionalText} \n\n${item}`;
+		const whatsappLink = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+			whatsappMessage,
+		)}`;
+		window.location.href = whatsappLink;
+	};
+
 	const renderCell = useCallback((user: Links, columnKey: any) => {
 		const cellValue = user[columnKey as keyof Links];
 		switch (columnKey) {
@@ -135,7 +153,6 @@ export default function NextTable({ links }: { links: Links[] }) {
 								</Button>
 							</DropdownTrigger>
 							<DropdownMenu>
-								{/* <DropdownItem>View</DropdownItem> */}
 								<DropdownItem>
 									<Button
 										size="sm"
@@ -149,6 +166,21 @@ export default function NextTable({ links }: { links: Links[] }) {
 										}
 									>
 										Copy
+									</Button>
+								</DropdownItem>
+								<DropdownItem>
+									<Button
+										size="sm"
+										variant="light"
+										endContent={
+											<SiWhatsapp className="text-[#25D366]" />
+										}
+										className="text-medium w-full flex justify-between items-center"
+										onClick={() =>
+											handleShareClick(user.link)
+										}
+									>
+										Share
 									</Button>
 								</DropdownItem>
 								<DropdownItem>
@@ -177,17 +209,19 @@ export default function NextTable({ links }: { links: Links[] }) {
 				aria-label="Example table with dynamic content"
 				bottomContentPlacement="outside"
 				bottomContent={
-					<div className="flex w-full justify-center">
-						<Pagination
-							isCompact
-							showControls
-							showShadow
-							color="secondary"
-							page={page}
-							total={pages}
-							onChange={(page) => setPage(page)}
-						/>
-					</div>
+					links.length > 10 ? (
+						<div className="flex w-full justify-center">
+							<Pagination
+								isCompact
+								showControls
+								showShadow
+								color="secondary"
+								page={page}
+								total={pages}
+								onChange={(page) => setPage(page)}
+							/>
+						</div>
+					) : null
 				}
 				topContent={
 					<div className=" flex flex-col items-between justify-start gap-4">
@@ -204,7 +238,7 @@ export default function NextTable({ links }: { links: Links[] }) {
 						</div>
 						<div className="gap-3 mx-4">
 							<span className="w-[30%] text-small text-default-400">
-								{`Total Links: ${items.length}`}
+								{`Total Links: ${links.length}`}
 							</span>
 						</div>
 					</div>
@@ -218,7 +252,7 @@ export default function NextTable({ links }: { links: Links[] }) {
 						</TableColumn>
 					)}
 				</TableHeader>
-				<TableBody items={items}>
+				<TableBody items={items} emptyContent={fallback}>
 					{(item) => (
 						<TableRow key={item.id}>
 							{(columnKey) => (
